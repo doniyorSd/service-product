@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="@dimen/main_dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_sum"
+        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintRight_toLeftOf="@+id/fill_pay"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:lines="1"
+        android:padding="@dimen/top_dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="To'lanadigan summa"
+            android:inputType="number"
+            android:textColorHint="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/fill_pay"
+            android:textColor="#549A17"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="To'lash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:text="Qarz sumasi"
+        android:layout_gravity="end"
+        android:id="@+id/tv_debt"
+        android:textSize="22sp"
+        android:textColor="#FF1100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn_finish"
+        android:layout_marginTop="8dp"
+        android:textAllCaps="false"
+        android:text="Yakunlash"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

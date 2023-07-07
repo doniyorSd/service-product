@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/main_dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_product"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ImageStyle_Circle"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Banan"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintLeft_toRightOf="@+id/iv_product"
+        app:layout_constraintRight_toLeftOf="@+id/btn_edit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/product_count"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="15 ta"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintRight_toLeftOf="@id/btn_edit"
+        app:layout_constraintLeft_toRightOf="@+id/iv_product"
+        app:layout_constraintTop_toBottomOf="@+id/product_name" />
+
+    <ImageView
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/btn_edit"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/baseline_edit_24"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

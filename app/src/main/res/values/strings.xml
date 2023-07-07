@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">sero-service-admin</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">login</string>
+    <string name="phone_number">password</string>
+    <string name="product_name">Mahsulot nomi</string>
+    <string name="product_count">Mahsulot soni</string>
+    <string name="add_picture">Rasm qo\'\shish</string>
+    <string name="add">Qo\'shish</string>
+    <string name="add_new_product">Yangi mahsulot qo\'shish</string>
+
+
+    <string name="request_camera_permission">Request CAMERA permission:</string>
+    <string name="request">Request</string>
+    <string name="request_record_audio_and_access_fine_location_permissions">Request RECORD_AUDIO and ACCESS_FINE_LOCATION permissions:</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="permission_denied_forever_message">"You have denied permissions forever. You can change your decision in the app settings.\n\nWould you like to open app settings?"</string>
+    <string name="audio_and_location_permissions_granted"><![CDATA[Location & record audio permissions grated]]></string>
+    <string name="open">Open</string>
+    <string name="camera_permission_granted">Camera permission has been granted</string>
+    <string name="read_external_storage_permission_granted">Read external storage permission has been granted</string>
+    <string name="permissions_denied_forever">Permissions are denied forever</string>
+    <string name="sell_company_product">Mahsulot sotilayotgan korxona nomi</string>
+    <string name="empity">Malumot to\'liq emas</string>
+    <string name="add_product">Mahsulot qo\'shish</string>
+</resources>

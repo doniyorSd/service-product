@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "979546236826",
+    "project_id": "service-92e10",
+    "storage_bucket": "service-92e10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979546236826:android:c0cf3fb108bcf994b6bc23",
+        "android_client_info": {
+          "package_name": "com.example.sero_service_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979546236826-abvfkqcmbequa66pq0e3dio17lr3p01s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHQunvMBOq9U6WeQTjPb4jnrepGyj89kM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979546236826-abvfkqcmbequa66pq0e3dio17lr3p01s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

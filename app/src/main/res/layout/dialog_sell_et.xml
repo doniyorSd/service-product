@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/main_dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_name"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="nomi"
+            android:textSize="24sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_count"
+            android:text="20 ta qoldi"
+            android:layout_marginStart="12dp"
+            android:textSize="20sp"
+            android:textColor="#5AEA33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_product_count"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:lines="1"
+        android:padding="@dimen/top_dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/product_count"
+            android:inputType="number"
+            android:textColorHint="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_product_price"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:lines="1"
+        android:padding="@dimen/top_dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/in_et_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mahsulot narxi"
+            android:inputType="number"
+            android:textColorHint="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:background="@color/color_divider"
+        android:layout_marginVertical="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"/>
+    <TextView
+        android:id="@+id/tv_sum"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="120000 so'm"
+        android:layout_gravity="end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btn_add"
+        android:textAllCaps="false"
+        android:text="Qo'shish"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
