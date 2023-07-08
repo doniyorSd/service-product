@@ -22,12 +22,10 @@ class ProductAdapter(private val listProduct:List<Product>,val sellClicks: SellC
             }
 
             bind.productName.text = product.name
+            bind.productDate.text = product.dateAndTime ?: ""
 
             bind.root.setOnClickListener {
                 sellClicks.rootClick(product,position)
-            }
-            bind.btnEdit.setOnClickListener {
-                sellClicks.editProduct(product, position)
             }
         }
     }
@@ -45,7 +43,6 @@ class ProductAdapter(private val listProduct:List<Product>,val sellClicks: SellC
     }
 
     interface SellClicks{
-        fun editProduct(product: Product,position: Int)
         fun rootClick(product: Product,position: Int)
     }
 

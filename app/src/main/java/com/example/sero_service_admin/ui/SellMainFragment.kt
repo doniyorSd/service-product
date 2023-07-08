@@ -50,6 +50,10 @@ class SellMainFragment : Fragment() {
 
         MySharedPreference.init(requireContext())
 
+        binding.backward.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         val id = MySharedPreference.id
         database = FirebaseDatabase.getInstance()
 
@@ -98,9 +102,6 @@ class SellMainFragment : Fragment() {
 
 
         adapter = ProductAdapter(listProduct, object : ProductAdapter.SellClicks {
-            override fun editProduct(product: Product, position: Int) {
-
-            }
 
             override fun rootClick(product: Product, position: Int) {
                 val dialog = AlertDialog.Builder(requireContext()).create()
@@ -160,6 +161,8 @@ class SellMainFragment : Fragment() {
                                 product.price = price.toInt()
                                 product.sellCount = count.toInt()
                                 adapter.notifyItemChanged(position)
+
+
                                 Toast.makeText(requireContext(), "Qo'shildi", Toast.LENGTH_SHORT)
                                     .show()
                                 dialog.dismiss()
@@ -217,8 +220,10 @@ class SellMainFragment : Fragment() {
                         soldUser = currentUser
                         paySum = sum
                     }
-                    sellProduct.productList
 
+                    sellProduct.productList?.forEach {
+                        it.productCount = it.sellCount!!
+                    }
                     // Admin,User
                     // User -> show Product , show Debt Fragment
 

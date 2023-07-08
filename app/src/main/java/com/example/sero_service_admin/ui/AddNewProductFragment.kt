@@ -12,9 +12,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
+import androidx.navigation.fragment.findNavController
 import com.example.sero_service_admin.BuildConfig
 import com.example.sero_service_admin.R
 import com.example.sero_service_admin.databinding.BottomPermissionBinding
@@ -30,6 +32,8 @@ import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class AddNewProductFragment : Fragment() {
@@ -59,6 +63,18 @@ class AddNewProductFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_add_new_product, container, false)
         binding = FragmentAddNewProductBinding.bind(view)
+        binding.backward.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finishAffinity()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
+
 
         val storage = FirebaseStorage.getInstance()
 
@@ -66,6 +82,8 @@ class AddNewProductFragment : Fragment() {
 
         database = Firebase.database
         myRef = database.getReference("products")
+
+        var warehouseRef = database.getReference("warehouseProduct")
 
 
         binding.ivProduct.setOnClickListener {
@@ -100,6 +118,15 @@ class AddNewProductFragment : Fragment() {
                     key, productName, imgUrl, 0, productCount.toInt()
                 )
                 myRef.child(key!!).setValue(product)
+
+                val current = LocalDateTime.now()
+
+                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
+                val formatted = current.format(formatter)
+
+                product.dateAndTime = formatted
+
+                warehouseRef.child(key).setValue(product)
                 Toast.makeText(requireContext(), "Qoshildi", Toast.LENGTH_SHORT).show()
                 binding.inEtProductName.text?.clear()
                 binding.inEtProductCount.text?.clear()

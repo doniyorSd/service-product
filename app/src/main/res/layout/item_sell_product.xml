@@ -58,9 +58,11 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_sum" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/btn_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="12dp"
             android:src="@drawable/baseline_edit_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"

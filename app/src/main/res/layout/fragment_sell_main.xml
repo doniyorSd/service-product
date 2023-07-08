@@ -8,6 +8,16 @@
     android:padding="@dimen/main_dp"
     tools:context=".ui.SellMainFragment">
 
+    <ImageView
+        android:padding="@dimen/main_dp"
+        android:id="@+id/backward"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_company_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_company_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <TextView
         android:id="@+id/tv_company_name"
         android:layout_width="wrap_content"
@@ -16,7 +26,7 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/backward"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

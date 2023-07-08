@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.sero_service_admin.R
 import com.example.sero_service_admin.databinding.DialogNumberBinding
 import com.example.sero_service_admin.databinding.DialogPasswordBinding
@@ -32,6 +34,21 @@ class SettingsFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
         val binding = FragmentSettingsBinding.bind(view)
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finishAffinity()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
+
+        MySharedPreference.init(requireContext())
+
+        binding.btnExit.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_registrationFragment)
+            MySharedPreference.id = "no"
+        }
 
         refUser = FirebaseDatabase.getInstance().getReference("users")
 

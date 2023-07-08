@@ -1,5 +1,6 @@
 package com.example.sero_service_admin.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,18 +8,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sero_service_admin.R
 import com.example.sero_service_admin.databinding.ItemSellProductBinding
 import com.example.sero_service_admin.model.SellProduct
+import com.example.sero_service_admin.model.User
+import com.example.sero_service_admin.model.UserEnum
 
 class SellProductAdapter(
     val companyListener: CompanyListener,
-    private val listProduct: ArrayList<SellProduct>
+    var listProduct: ArrayList<SellProduct>,
+    val user: User
 ) :
     RecyclerView.Adapter<SellProductAdapter.MyViewHolder>() {
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun onBind(sellProduct: SellProduct, position: Int) {
             val bind = ItemSellProductBinding.bind(itemView)
 
+            Log.d("AAA", "onBind: ${user.position == UserEnum.USER}")
+            Log.d("AAA", "onBind: ${user.position} ${UserEnum.USER}")
+            Log.d("AAA", ((sellProduct.debt ?: 0) < 0).toString())
+
+            if (user.position == UserEnum.USER || (sellProduct.debt ?: 0) <= 0)
+                bind.btnEdit.visibility = View.GONE
+            else
+                bind.btnEdit.visibility = View.VISIBLE
+
             bind.apply {
-                if (sellProduct.dateAndTime != null){
+                if (sellProduct.dateAndTime != null) {
                     tvDate.text = sellProduct.dateAndTime ?: ""
                     tvCompanyName.text = sellProduct.toCompany ?: ""
                     tvDebt.text = "Qarz: ${sellProduct.debt ?: ""} so'm"
@@ -26,10 +39,10 @@ class SellProductAdapter(
                 }
             }
             bind.root.setOnClickListener {
-                companyListener.clickClick(sellProduct,position)
+                companyListener.clickClick(sellProduct, position)
             }
             bind.btnEdit.setOnClickListener {
-                companyListener.editClick(sellProduct, position)
+                companyListener.clickEdit(sellProduct, position)
             }
         }
     }
@@ -48,7 +61,6 @@ class SellProductAdapter(
 
     interface CompanyListener {
         fun clickClick(sellProduct: SellProduct, position: Int)
-
-        fun editClick(sellProduct: SellProduct,position: Int)
+        fun clickEdit(sellProduct: SellProduct, position: Int)
     }
 }

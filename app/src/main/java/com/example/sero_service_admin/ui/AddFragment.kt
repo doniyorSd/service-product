@@ -1,31 +1,29 @@
 package com.example.sero_service_admin.ui
 
-import android.Manifest
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
 import com.example.sero_service_admin.R
 import com.example.sero_service_admin.adapter.ProductViewPagerAdapter
 import com.example.sero_service_admin.databinding.FragmentAddBinding
-import com.google.android.material.tabs.TabLayout
+import com.example.sero_service_admin.model.User
+import com.example.sero_service_admin.model.UserEnum
+import com.example.sero_service_admin.utils.MySharedPreference
 import com.google.android.material.tabs.TabLayoutMediator
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+
 
 class AddFragment : Fragment() {
 
     lateinit var binding: FragmentAddBinding
     lateinit var adapter: ProductViewPagerAdapter
+    var user :User?= null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,14 +33,45 @@ class AddFragment : Fragment() {
         binding = FragmentAddBinding.bind(view)
 
 
-        adapter = ProductViewPagerAdapter(requireActivity())
-        binding.viewPager.adapter = adapter
 
-        TabLayoutMediator(
-            binding.tabLayout, binding.viewPager
-        ) { tab, position ->
-            tab.text = if (position == 0) "Mahsulot qoshish" else "Mahsulot yaratish"
-        }.attach()
+        val database = FirebaseDatabase.getInstance()
+        val refUser = database.getReference("users")
+
+        MySharedPreference.init(requireContext())
+        val id = MySharedPreference.id
+
+        refUser.child(id!!).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                user = snapshot.getValue(User::class.java)
+
+
+                if (user!= null){
+                    adapter = if (user?.position == UserEnum.USER){
+                        ProductViewPagerAdapter(requireActivity(), listOf(AddProductWarehouseFragment()))
+                    }else{
+                        ProductViewPagerAdapter(requireActivity(), listOf(AddProductWarehouseFragment(),ProductFragment(),AddOldFragment()))
+                    }
+                }
+
+                binding.viewPager.adapter = adapter
+
+
+
+
+                TabLayoutMediator(
+                    binding.tabLayout, binding.viewPager
+                ) { tab, position ->
+                    tab.text =if (position == 0) "Ombor" else if (position == 1) "Mahsulot tarixi" else "Eski Mahsulot qoshish"
+
+                }.attach()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+
+            }
+        })
+
 
 
 

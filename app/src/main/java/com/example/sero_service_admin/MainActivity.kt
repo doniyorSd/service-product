@@ -1,9 +1,9 @@
 package com.example.sero_service_admin
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,12 +19,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navController = Navigation.findNavController(this, R.id.fragmentContainerView)
         setupWithNavController(binding.bottomNav, navController)
-
 
         visibilityNavElements()
 
@@ -33,14 +34,13 @@ class MainActivity : AppCompatActivity() {
         windowInsetsController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
-
     }
 
     private fun visibilityNavElements() {
         findNavController(R.id.fragmentContainerView).addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
 
-                R.id.homeFragment, R.id.addFragment, R.id.addUserFragment, R.id.settingsFragment -> {
+                R.id.homeFragment, R.id.addFragment,R.id.CHatFragment, R.id.addUserFragment, R.id.settingsFragment -> {
                     binding.bottomNav.visibility = View.VISIBLE
                 }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.example.sero_service_admin.R
 import com.example.sero_service_admin.databinding.FragmentRegistrationBinding
@@ -29,6 +30,14 @@ class RegistrationFragment : Fragment() {
 
         database = Firebase.database
         myRef = database.getReference("users")
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finishAffinity()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
 
         MySharedPreference.init(requireContext())
 

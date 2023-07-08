@@ -11,5 +11,6 @@ data class Product(
     var productImg: String? = null,
     var price: Int = 0,
     var productCount: Int? = null,
+    var dateAndTime:String?= null,
     @get:Exclude var sellCount:Int?= null
 ) : Serializable

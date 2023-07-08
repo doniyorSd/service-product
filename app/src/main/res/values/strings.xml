@@ -24,4 +24,5 @@
     <string name="sell_company_product">Mahsulot sotilayotgan korxona nomi</string>
     <string name="empity">Malumot to\'liq emas</string>
     <string name="add_product">Mahsulot qo\'shish</string>
+    <string name="submit">submit</string>
 </resources>
