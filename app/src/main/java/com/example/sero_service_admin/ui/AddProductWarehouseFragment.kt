@@ -147,7 +147,6 @@ class AddProductWarehouseFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 user = snapshot.getValue(User::class.java)
 
-
                 if (user != null) {
                     if (user?.position == UserEnum.USER){
                         binding.btnAdd.visibility = View.GONE
