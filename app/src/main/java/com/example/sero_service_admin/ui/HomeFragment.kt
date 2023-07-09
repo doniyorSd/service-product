@@ -188,13 +188,8 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-                val format: NumberFormat = NumberFormat.getCurrencyInstance()
-                format.maximumFractionDigits = 0
-                format.currency = Currency.getInstance("UZS")
-
                 val ss = listDate.sumOf { it.paySum!! }
-                val form = format.format(ss).substring(3)
-                binding.tvSum.text = "Bir kunlik tushum $form"
+                binding.tvSum.text =  ss.toString()
 
                 adapter.notifyDataSetChanged()
                 Log.d("AAA", "sell: $list")
@@ -238,11 +233,93 @@ class HomeFragment : Fragment() {
 
         }
 
-
-
-
-
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        MySharedPreference.init(requireContext())
+        val id = MySharedPreference.id
+
+        refUser.child(id!!).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                user = snapshot.getValue(User::class.java)
+
+                val bottomNav =
+                    requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
+                if (user?.position == UserEnum.USER) {
+                    bottomNav.menu.findItem(R.id.addUserFragment).isVisible = false
+                } else if (user?.position == UserEnum.ADMIN) {
+                    bottomNav.menu.findItem(R.id.addUserFragment).isVisible = true
+                }
+
+                adapter = SellProductAdapter(object : SellProductAdapter.CompanyListener {
+                    override fun clickClick(sellProduct: SellProduct, position: Int) {
+                        if (sellProduct.productList?.isNotEmpty()!!) {
+                            val dialog = AlertDialog.Builder(requireContext()).create()
+                            val dialogView = LayoutInflater.from(requireContext())
+                                .inflate(R.layout.dialog_product, binding.root, false)
+                            dialog.setView(dialogView)
+                            dialog.show()
+                            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+                            val bind = DialogProductBinding.bind(dialogView)
+
+                            bind.tvDebt.text = "Qarz: ${sellProduct.debt ?: ""} so'm"
+                            bind.tvSum.text = "Umumiy summa ${sellProduct.paySum ?: ""} so'm"
+                            if (sellProduct.debt != null)
+                                bind.tvPaid.text =
+                                    "To'langan summa ${sellProduct.paySum!! - sellProduct.debt!!} so'm"
+
+                            val dialogAdapter =
+                                DialogProductAdapter(sellProduct.productList!!)
+
+                            bind.rvProduct.adapter = dialogAdapter
+
+                        } else {
+                            Toast.makeText(requireContext(), "Malumot yetarli emas", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
+
+                    override fun clickEdit(sellProduct: SellProduct, position: Int) {
+                        val dialog = AlertDialog.Builder(requireContext()).create()
+                        val dialogView = layoutInflater.inflate(R.layout.dialog_debt,binding.root,false)
+                        val bind = DialogDebtBinding.bind(dialogView)
+                        dialog.setView(dialogView)
+                        dialog.show()
+
+                        bind.tvSum.text = "Umumiy suma: ${(sellProduct.paySum ?: 0)}"
+                        bind.tvPaySum.text = "To'langan summa ${(sellProduct.paySum ?: 0) - (sellProduct.debt ?: 0)}"
+                        bind.tvDebt.text = "Qarz: ${sellProduct.debt ?: 0}"
+
+                        bind.btnSve.setOnClickListener {
+                            val debt = bind.etDebt.text.toString()
+                            if (debt.isNotBlank()){
+                                if (debt.toInt() <= (sellProduct.debt ?: 0)){
+                                    sellProduct.debt = sellProduct.debt?.minus(debt.toInt())
+                                    refSellProduct.child(sellProduct.id!!).setValue(sellProduct)
+                                    dialog.dismiss()
+                                    Toast.makeText(requireContext(), "Saqlandi", Toast.LENGTH_SHORT).show()
+                                }
+                            }else{
+                                Toast.makeText(requireContext(), getString(R.string.empity), Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }, list, user!!)
+
+                binding.rvProduct.adapter = adapter
+
+                binding.tvTopBar.text = user?.name
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+
+            }
+        })
     }
 }
 

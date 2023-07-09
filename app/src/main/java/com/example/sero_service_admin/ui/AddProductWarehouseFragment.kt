@@ -29,10 +29,12 @@ import com.google.firebase.database.ValueEventListener
 class AddProductWarehouseFragment : Fragment() {
 
     lateinit var myRef: DatabaseReference
+    lateinit var refUser: DatabaseReference
     lateinit var database: FirebaseDatabase
     lateinit var adapter: ProductAdapter
     lateinit var list:ArrayList<Product>
     var user:User?= null
+    lateinit var binding:FragmentAddProductWarehouseBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,13 +42,13 @@ class AddProductWarehouseFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_product_warehouse, container, false)
-        val binding = FragmentAddProductWarehouseBinding.bind(view)
+         binding = FragmentAddProductWarehouseBinding.bind(view)
 
         database = FirebaseDatabase.getInstance()
         list = ArrayList()
 
         val database = FirebaseDatabase.getInstance()
-        val refUser = database.getReference("users")
+        refUser = database.getReference("users")
 
         MySharedPreference.init(requireContext())
         val id = MySharedPreference.id
@@ -133,6 +135,32 @@ class AddProductWarehouseFragment : Fragment() {
 
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        MySharedPreference.init(requireContext())
+        val id = MySharedPreference.id
+
+        refUser.child(id!!).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                user = snapshot.getValue(User::class.java)
+
+
+                if (user != null) {
+                    if (user?.position == UserEnum.USER){
+                        binding.btnAdd.visibility = View.GONE
+                    }else{
+                        binding.btnAdd.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
     }
 
 }
